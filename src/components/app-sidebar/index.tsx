@@ -65,7 +65,7 @@ export function AppSidebar() {
     useThreadsContext();
 
   return (
-    <Sidebar className="border-r-[0px] bg-[#F9FAFB]">
+    <Sidebar className="border-r-[0px] bg-background">
       <SidebarContent className="flex flex-col h-screen pb-9 pt-6">
         <div className="flex items-center justify-between px-11">
           <NextLink href="/" className="flex-shrink-0 w-full">
@@ -84,7 +84,9 @@ export function AppSidebar() {
                       key={`graph-id-${item.graphId}-${idx}`}
                       className={cn(
                         "flex items-center w-full",
-                        item.selected ? "bg-gray-100 rounded-md" : ""
+                        item.selected
+                          ? "bg-primary-background rounded-md"
+                          : ""
                       )}
                     >
                       <TooltipProvider>
@@ -108,7 +110,9 @@ export function AppSidebar() {
                               <span
                                 className={cn(
                                   "truncate min-w-0 font-medium",
-                                  item.selected ? "text-black" : "text-gray-600"
+                                  item.selected
+                                    ? "text-black dark:text-gray-200"
+                                    : "text-gray-600 dark:text-gray-50"
                                 )}
                               >
                                 {label}
@@ -121,7 +125,7 @@ export function AppSidebar() {
                       <TooltipIconButton
                         variant="ghost"
                         tooltip="Delete"
-                        className="text-gray-800 hover:text-red-500 transition-colors ease-in-out duration-200"
+                        className="text-gray-800 dark:text-gray-200 hover:text-red-500 dark:hover:text-red-500 transition-colors ease-in-out duration-200"
                         delayDuration={100}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -144,8 +148,7 @@ export function AppSidebar() {
                 >
                   <PillButton
                     variant="outline"
-                    className="flex gap-2 items-center justify-center text-gray-800"
-                    size="lg"
+                    className="flex gap-2 items-center justify-center bg-background dark:bg-background text-gray-800 dark:text-gray-200 hover:bg-background dark:hover:bg-background hover:text-gray-700 dark:hover:text-gray-300 transition-colors ease-in-out duration-200 rounded-lg p-2"                    size="lg"
                   >
                     <FileText />
                     <span>Documentation</span>

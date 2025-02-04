@@ -56,7 +56,7 @@ export function AddAgentInboxDialog({
     }
   }, [noInboxesFoundParam]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => { // submit 함수를 온클릭으로 실행하여 url 상태를 usequeryparams로 갱신
     event.preventDefault();
     addAgentInbox({
       id: uuidv4(),

@@ -54,7 +54,7 @@ export function AgentInboxView<
       <div className="pl-5 pt-4">
         <InboxButtons changeInbox={changeInbox} />
       </div>
-      <div className="flex flex-col items-start w-full max-h-fit h-full border-y-[1px] border-gray-50 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 mt-3">
+      <div className="flex flex-col items-start w-full max-h-fit h-full border-y-[1px] border-gray-400 dark:border-gray-600 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 mt-3">
         {threadDataToRender.map((threadData, idx) => {
           return (
             <InboxItem<ThreadValues>
@@ -66,7 +66,7 @@ export function AgentInboxView<
         })}
         {noThreadsFound && !loading && (
           <div className="w-full flex items-center justify-center p-4">
-            <div className="flex gap-2 items-center justify-center text-gray-700">
+            <div className="flex gap-2 items-center justify-center text-gray-700 dark:text-gray-300">
               <InboxIcon className="w-6 h-6" />
               <p className="font-medium">No threads found</p>
             </div>
@@ -74,7 +74,7 @@ export function AgentInboxView<
         )}
         {noThreadsFound && loading && (
           <div className="w-full flex items-center justify-center p-4">
-            <div className="flex gap-2 items-center justify-center text-gray-700">
+            <div className="flex gap-2 items-center justify-center text-gray-700 dark:text-gray-300">
               <p className="font-medium">Loading</p>
               <LoaderCircle className="w-6 h-6 animate-spin" />
             </div>

@@ -27,17 +27,17 @@ export function InboxItemStatuses({
       <div
         className={cn(
           "flex items-center justify-center px-2 py-[2px] rounded-full border-[1.5px] w-fit font-medium text-nowrap",
-          "hover:bg-gray-50/90 transition-colors ease-in-out",
+          "hover:bg-gray-50/90 dark:hover:bg-green-800 transition-colors ease-in-out",
           isOnlyIgnoreAllowed
             ? "border-gray-600 text-gray-600"
-            : "border-green-700 text-green-700"
+            : "border-green-600 text-green-600"
         )}
       >
         <div className="text-sm flex items-center justify-center gap-2">
           <div
             className={cn(
               "w-[6px] h-[6px] rounded-full",
-              isOnlyIgnoreAllowed ? "bg-gray-600" : "bg-green-700"
+              isOnlyIgnoreAllowed ? "bg-gray-600" : "bg-green-600"
             )}
           />
           <span>{isOnlyIgnoreAllowed ? "Ignore" : "Requires Action"}</span>
@@ -52,7 +52,7 @@ export function InboxItemStatuses({
           status === "idle" && "border-gray-600 text-gray-600",
           status === "busy" && "border-yellow-600 text-yellow-600",
           status === "error" && "border-red-600 text-red-600",
-          status === "interrupted" && "border-green-700 text-green-700"
+          status === "interrupted" && "border-green-500 text-green-500"
         )}
       >
         <p className="text-sm">{prettifyText(status)}</p>

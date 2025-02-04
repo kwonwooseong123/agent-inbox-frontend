@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { CircleX, LoaderCircle, Undo2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-function ResetButton({ handleReset }: { handleReset: () => void }) {
+function ResetButton({ handleReset }: { handleReset: () => void }) { // 리셋 버튼 컴포넌트 handle reset 함수를 호출
   return (
     <Button
       onClick={handleReset}
@@ -27,7 +27,8 @@ function ResetButton({ handleReset }: { handleReset: () => void }) {
   );
 }
 
-function ArgsRenderer({ args }: { args: Record<string, any> }) {
+function ArgsRenderer({ args }: { args: Record<string, any> }) { // action_request.args content(k):Value
+  console.log("Args passed to ArgsRenderer:", args); // Log the data
   return (
     <div className="flex flex-col gap-6 items-start w-full">
       {Object.entries(args).map(([k, v]) => {
@@ -35,15 +36,16 @@ function ArgsRenderer({ args }: { args: Record<string, any> }) {
         if (["string", "number"].includes(typeof v)) {
           value = v as string;
         } else {
-          value = JSON.stringify(v, null);
+          value = JSON
+          .stringify(v, null);
         }
 
         return (
           <div key={`args-${k}`} className="flex flex-col gap-1 items-start">
-            <p className="text-sm leading-[18px] text-gray-600 text-wrap">
+            <p className="text-sm leading-[18px] text-gray-600 dark:text-gray-400 text-wrap">
               {prettifyText(k)}:
             </p>
-            <span className="text-[13px] leading-[18px] text-black bg-zinc-100 rounded-xl p-3 w-full max-w-full">
+            <span className="text-[13px] leading-[18px] text-black dark:text-white bg-zinc-100 dark:bg-zinc-800 rounded-xl p-3 w-full max-w-full">
               <MarkdownText className="text-wrap break-all break-words whitespace-pre-wrap">
                 {value}
               </MarkdownText>
@@ -112,9 +114,9 @@ function ResponseComponent({
   };
 
   return (
-    <div className="flex flex-col gap-4 p-6 items-start w-full rounded-xl border-[1px] border-gray-300">
+    <div className="flex flex-col gap-4 p-6 items-start w-full rounded-xl border-[1px] border-gray-300 dark:border-gray-600">
       <div className="flex items-center justify-between w-full">
-        <p className="font-semibold text-black text-base">Respond</p>
+        <p className="font-semibold text-black dark:text-white text-base">Respond</p>
         <ResetButton
           handleReset={() => {
             onResponseChange("", res);
@@ -123,11 +125,11 @@ function ResponseComponent({
       </div>
 
       {showArgsInResponse && (
-        <ArgsRenderer args={interruptValue.action_request.args} />
+        <ArgsRenderer args={interruptValue.action_request.args} /> // action request의 args를 표시
       )}
 
       <div className="flex flex-col gap-[6px] items-start w-full">
-        <p className="text-sm min-w-fit font-medium">Response</p>
+        <p className="text-sm min-w-fit font-medium text-black dark:text-white">Response</p>
         <Textarea
           disabled={streaming}
           value={res.args}
@@ -160,14 +162,14 @@ function AcceptComponent({
   ) => Promise<void>;
 }) {
   return (
-    <div className="flex flex-col gap-4 items-start w-full p-6 rounded-lg border-[1px] border-gray-300">
+    <div className="flex flex-col gap-4 items-start w-full p-6 rounded-lg border-[1px] border-gray-300 dark:border-gray-600">
       {actionRequestArgs && Object.keys(actionRequestArgs).length > 0 && (
         <ArgsRenderer args={actionRequestArgs} />
       )}
       <Button
         variant="brand"
         disabled={streaming}
-        onClick={handleSubmit}
+        onClick={handleSubmit} // humanResponse type: "accept" 를 벡엔드로 전달 이후 새로운 url 전달받고 effect로 페이지 렌더링
         className="w-full"
       >
         Accept
@@ -199,7 +201,9 @@ function EditAndOrAcceptComponent({
 }) {
   const defaultRows = React.useRef<Record<string, number>>({});
   const editResponse = humanResponse.find((r) => r.type === "edit");
+  console.log("Full editResponse object:", editResponse);
   const acceptResponse = humanResponse.find((r) => r.type === "accept");
+  console.log("Full acceptResponse object:", acceptResponse);
   if (
     !editResponse ||
     typeof editResponse.args !== "object" ||
@@ -259,11 +263,11 @@ function EditAndOrAcceptComponent({
   return (
     <div className="flex flex-col gap-4 items-start w-full p-6 rounded-lg border-[1px] border-gray-300">
       <div className="flex items-center justify-between w-full">
-        <p className="font-semibold text-black text-base">{header}</p>
+        <p className="font-semibold text-black dark:text-white text-base">{header}</p>
         <ResetButton handleReset={handleReset} />
       </div>
 
-      {Object.entries(editResponse.args.args).map(([k, v], idx) => {
+      {Object.entries(editResponse.args.args).map(([k, v], idx) => { // 어디서 editresponse.args.args 가 불려오는지 확인
         const value = ["string", "number"].includes(typeof v)
           ? v
           : JSON.stringify(v, null);
@@ -282,18 +286,18 @@ function EditAndOrAcceptComponent({
 
         return (
           <div
-            className="flex flex-col gap-1 items-start w-full h-full px-[1px]"
+            className="flex flex-col gap-1 items-start w-full h-full px-[1px] "
             key={`allow-edit-args--${k}-${idx}`}
           >
             <div className="flex flex-col gap-[6px] items-start w-full">
-              <p className="text-sm min-w-fit font-medium">{prettifyText(k)}</p>
+              <p className="text-sm min-w-fit font-medium">{prettifyText(k)}</p> {/*content,new recipient k값*/}
               <Textarea
                 disabled={streaming}
                 className="h-full"
-                value={value}
+                value={value} // args value 값
                 onChange={(e) => onEditChange(e.target.value, editResponse, k)}
                 onKeyDown={handleKeyDown}
-                rows={numRows}
+                rows={numRows} // 8칸으로 지정된 기본 칸
               />
             </div>
           </div>
@@ -310,7 +314,7 @@ function EditAndOrAcceptComponent({
 }
 const EditAndOrAccept = React.memo(EditAndOrAcceptComponent);
 
-export function InboxItemInput({
+export function InboxItemInput({ // 메인 컴포넌트
   interruptValue,
   humanResponse,
   streaming,
@@ -330,8 +334,8 @@ export function InboxItemInput({
   const { toast } = useToast();
   const isEditAllowed = interruptValue.config.allow_edit;
   const isResponseAllowed = interruptValue.config.allow_respond;
-  const hasArgs = Object.entries(interruptValue.action_request.args).length > 0;
-  const showArgsInResponse =
+  const hasArgs = Object.entries(interruptValue.action_request.args).length > 0; // args가 있는지 확인?
+  const showArgsInResponse = //부분적 렌더링
     hasArgs && !isEditAllowed && !acceptAllowed && isResponseAllowed;
   const showArgsOutsideActionCards =
     hasArgs && !showArgsInResponse && !isEditAllowed && !acceptAllowed;
@@ -356,7 +360,7 @@ export function InboxItemInput({
 
     let valuesChanged = true;
     if (typeof response.args === "object") {
-      const updatedArgs = { ...(response.args?.args || {}) };
+      const updatedArgs = { ...(response.args?.args || {}) }; // response.args.args content(k) : 이메일 내용 (v)
 
       if (Array.isArray(change) && Array.isArray(key)) {
         // Handle array inputs by mapping corresponding values
@@ -396,7 +400,7 @@ export function InboxItemInput({
         return prev;
       }
 
-      const newEdit: HumanResponseWithEdits = {
+      const newEdit: HumanResponseWithEdits = { // edit response 데이터
         type: response.type,
         args: {
           action: response.args.action,
@@ -496,11 +500,11 @@ export function InboxItemInput({
       )}
     >
       {showArgsOutsideActionCards && (
-        <ArgsRenderer args={interruptValue.action_request.args} />
+        <ArgsRenderer args={interruptValue.action_request.args} /> // action request의 args를 표시
       )}
 
       <div className="flex flex-col gap-2 items-start w-full">
-        <EditAndOrAccept
+        <EditAndOrAccept // 편집창 사용자 인터랙트
           humanResponse={humanResponse}
           streaming={streaming}
           initialValues={initialValues}
@@ -508,14 +512,14 @@ export function InboxItemInput({
           onEditChange={onEditChange}
           handleSubmit={handleSubmit}
         />
-        {supportsMultipleMethods ? (
+        {supportsMultipleMethods ? ( // 디바이더 or
           <div className="flex gap-3 items-center w-full mt-3">
             <Separator className="w-1/2" />
             <p className="text-sm text-gray-500">Or</p>
             <Separator className="w-1/2" />
           </div>
         ) : null}
-        <Response
+        <Response // 에이전트창 사용자 인터랙트
           humanResponse={humanResponse}
           streaming={streaming}
           showArgsInResponse={showArgsInResponse}
@@ -523,7 +527,7 @@ export function InboxItemInput({
           onResponseChange={onResponseChange}
           handleSubmit={handleSubmit}
         />
-        {streaming && !currentNode && (
+        {streaming && !currentNode && ( // 스트리밍이 시작되면 렌더링
           <p className="text-sm text-gray-600">Waiting for Graph to start...</p>
         )}
         {streaming && currentNode && !isError && (
@@ -553,3 +557,11 @@ export function InboxItemInput({
     </div>
   );
 }
+
+
+/*
+1. 입력 변경: 사용자가 편집을 하면 onEditChange나 onResponseChange가 호출되어 응답을 업데이트
+2. 상태 업데이트: 새로운 응답을 작성하면 setHumanResponse로 상태를 업데이트
+3. UI 렌더링: 상태 변화에 따라 function Response, EditAndOrAccept, ArgsRenderer 등의 컴포넌트가 렌더링
+4. 응답 제출: 최종적으로 사용자가 제출 버튼을 클릭하면 handleSubmit util함수가 호출되어 변경될 url params를 서버로 응답 송신
+*/

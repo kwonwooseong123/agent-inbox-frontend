@@ -22,16 +22,16 @@ export function ThreadView<
   React.useEffect(() => {
     try {
       if (typeof window === "undefined") return;
-      if (!threadId || !threads.length || loading) return;
+      if (!threadId || !threads.length || loading) return; // threadId를 사용하지 않는 경우 index.tsx로 돌아감
       const selectedThread = threads.find(
         (t) => t.thread.thread_id === threadId
       );
       if (selectedThread) {
         setThreadData(selectedThread);
-        return;
+        return;// 전달받은 threadId를 사용하여 thread 데이터 가져오고 threadData state에 저장 후 리렌더링
       } else {
         // Route the user back to the inbox view.
-        updateQueryParams(VIEW_STATE_THREAD_QUERY_PARAM);
+        updateQueryParams(VIEW_STATE_THREAD_QUERY_PARAM); // url 업데이트로 인박스뷰로 유저 반환
       }
     } catch (e) {
       console.error("Error updating query params & setting thread data", e);
@@ -56,7 +56,7 @@ export function ThreadView<
       setShowState(false);
       setShowDescription(false);
     }
-  };
+  }; // 스테이트와 디스크립션 상태에 따라 사이드패널 보여줌
 
   if (
     !threadData ||
@@ -65,7 +65,7 @@ export function ThreadView<
     threadData.interrupts.length === 0
   ) {
     return null;
-  }
+  } // threadData가 null 이거나 interrupt 스테이터스가 아닌경우 null 반환
 
   return (
     <div className="flex flex-col lg:flex-row w-full h-full">
@@ -75,7 +75,7 @@ export function ThreadView<
           showSidePanel ? "lg:min-w-1/2 lg:max-w-2xl w-full" : "w-full"
         )}
       >
-        <ThreadActionsView<ThreadValues>
+        <ThreadActionsView<ThreadValues> // threadActionsView.tsx 컴포넌트에 props와 state 전달
           threadData={
             threadData as {
               thread: Thread<ThreadValues>;

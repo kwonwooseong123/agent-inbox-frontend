@@ -14,6 +14,7 @@ import { HumanInterrupt, ThreadStatusWithAll } from "../types";
 import { prettifyText } from "../utils";
 import { useThreadsContext } from "../contexts/ThreadContext";
 import React from "react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export function BreadCrumb({ className }: { className?: string }) {
   const { searchParams } = useQueryParams();
@@ -83,12 +84,13 @@ export function BreadCrumb({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex items-center justify-start gap-2 text-gray-500 text-sm",
+        "flex items-center justify-start gap-2 text-gray-500 text-sm dark:text-gray-200",
         className
       )}
     >
+      <ThemeToggle />
       <NextLink href={constructBaseUrl()}>
-        <Button size="sm" className="text-gray-500" variant="link">
+        <Button size="sm" className="text-gray-500 dark:text-gray-200" variant="link">
           {agentInboxLabel}
         </Button>
       </NextLink>
@@ -97,7 +99,7 @@ export function BreadCrumb({ className }: { className?: string }) {
         <>
           <ChevronRight className="h-[14px] w-[14px]" />
           <NextLink href={constructInboxLink()}>
-            <Button size="sm" className="text-gray-500" variant="link">
+            <Button size="sm" className="text-gray-500 dark:text-gray-200" variant="link">
               {selectedInboxLabel}
             </Button>
           </NextLink>
@@ -107,7 +109,7 @@ export function BreadCrumb({ className }: { className?: string }) {
         <>
           <ChevronRight className="h-[14px] w-[14px]" />
           <NextLink href={window.location.pathname + window.location.search}>
-            <Button size="sm" className="text-gray-500" variant="link">
+            <Button size="sm" className="text-gray-500 dark:text-gray-200" variant="link">
               {selectedThreadActionLabel}
             </Button>
           </NextLink>

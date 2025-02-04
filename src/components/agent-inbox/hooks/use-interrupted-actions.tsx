@@ -140,17 +140,17 @@ export default function useInterruptedActions<
     }
 
     let errorOccurred = false;
-    initialHumanInterruptEditValue.current = {};
+    initialHumanInterruptEditValue.current = {}; // 이전 편집 객체 초기화
 
     if (
       humanResponse.some((r) => ["response", "edit", "accept"].includes(r.type))
     ) {
-      setStreamFinished(false);
-      setCurrentNode("");
+      setStreamFinished(false); // 위의 타입 중 하나라도 해당되면 stream를 종료하지 않도록 설정
+      setCurrentNode(""); // 현재 노드 초기화?
 
       try {
         const humanResponseInput: HumanResponse[] = humanResponse.flatMap(
-          (r) => {
+          (r) => { // human response의 타입을 변경
             if (r.type === "edit") {
               if (r.acceptAllowed && !r.editsMade) {
                 return {
@@ -176,7 +176,7 @@ export default function useInterruptedActions<
           }
         );
 
-        const input = humanResponseInput.find(
+        const input = humanResponseInput.find( // 타입 확인
           (r) => r.type === selectedSubmitType
         );
         if (!input) {
@@ -190,8 +190,8 @@ export default function useInterruptedActions<
         }
 
         setLoading(true);
-        setStreaming(true);
-        const response = sendHumanResponse(
+        setStreaming(true);// 로딩 스트리밍 활성화 sendHumanResponse를 호출하여 응답을 서버로 전송
+        const response = sendHumanResponse(//비동기 생성자 response
           threadData.thread.thread_id,
           [input],
           {
@@ -270,7 +270,7 @@ export default function useInterruptedActions<
         setStreamFinished(false);
       }
 
-      if (!errorOccurred) {
+      if (!errorOccurred) { // 에러가 없으면 스트리밍 종료 후 threaddata 업데이트
         setCurrentNode("");
         setStreaming(false);
         const updatedThreadData = await fetchSingleThread(
@@ -281,7 +281,7 @@ export default function useInterruptedActions<
         } else {
           // Re-fetch threads before routing back so the inbox is up to date
           await fetchThreads(currentInbox);
-          updateQueryParams(VIEW_STATE_THREAD_QUERY_PARAM);
+          updateQueryParams(VIEW_STATE_THREAD_QUERY_PARAM); // thread id 삭제 inbox로 복귀
         }
         setStreamFinished(false);
       }

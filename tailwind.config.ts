@@ -98,33 +98,33 @@ const config: Config = {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
-			fontFamily: {
-        mono: [
-          `"Fira Code"`,
-          `ui-monospace`,
-          `SFMono-Regular`,
-          `Menlo`,
-          `Monaco`,
-          `Consolas`,
-          `"Liberation Mono"`,
-          `"Courier New"`,
-          `monospace`,
-        ],
-				sans: [
-          "Inter",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          'Segoe UI',
-          "Roboto",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
-          'Apple Color Emoji',
-          'Segoe UI Emoji',
-          'Segoe UI Symbol',
-        ],
-      },
-      letterSpacing: {
+  		fontFamily: {
+  			mono: [
+  				'`"Fira Code"`',
+  				'`ui-monospace`',
+  				'`SFMono-Regular`',
+  				'`Menlo`',
+  				'`Monaco`',
+  				'`Consolas`',
+  				'`"Liberation Mono"`',
+  				'`"Courier New"`',
+  				'`monospace`'
+  			],
+  			sans: [
+  				'Inter',
+  				'-apple-system',
+  				'BlinkMacSystemFont',
+  				'Segoe UI',
+  				'Roboto',
+  				'Helvetica',
+  				'Arial',
+  				'sans-serif',
+  				'Apple Color Emoji',
+  				'Segoe UI Emoji',
+  				'Segoe UI Symbol'
+  			]
+  		},
+  		letterSpacing: {
   			tighter: '-0.04em'
   		}
   	}

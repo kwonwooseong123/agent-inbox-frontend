@@ -45,7 +45,7 @@ function InboxButton({
       onClick={onClick}
       className={cn(
         "text-[16px] leading-6 font-medium",
-        selectedInbox === label.toLowerCase() ? "text-black" : "text-gray-500"
+        selectedInbox === label.toLowerCase() ? "text-black dark:text-white" : "text-gray-500 dark:text-gray-400"
       )}
       variant="ghost"
     >

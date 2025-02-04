@@ -72,7 +72,7 @@ export function SettingsPopover() {
         <PopoverTrigger asChild>
           <PillButton
             variant="outline"
-            className="flex gap-2 items-center justify-center text-gray-800 w-fit"
+            className="flex gap-2 items-center justify-center bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 w-fit hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 transition-colors ease-in-out duration-200 rounded-lg p-2"
             size="lg"
           >
             <Settings />

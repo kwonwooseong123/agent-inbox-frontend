@@ -9,6 +9,7 @@ import { constructOpenInStudioURL } from "../utils";
 import { Button } from "@/components/ui/button";
 import NextLink from "next/link";
 import { useThreadsContext } from "../contexts/ThreadContext";
+import DeleteButton from '@/components/ui/deleteItem';
 
 interface GenericInboxItemProps<
   ThreadValues extends Record<string, any> = Record<string, any>,
@@ -24,7 +25,7 @@ interface GenericInboxItemProps<
 export function GenericInboxItem<
   ThreadValues extends Record<string, any> = Record<string, any>,
 >({ threadData, isLast }: GenericInboxItemProps<ThreadValues>) {
-  const { agentInboxes } = useThreadsContext<ThreadValues>();
+  const { agentInboxes, ignoreThread } = useThreadsContext<ThreadValues>();
   const { toast } = useToast();
 
   const deploymentUrl = agentInboxes.find((i) => i.selected)?.deploymentUrl;
@@ -55,7 +56,7 @@ export function GenericInboxItem<
     <div
       className={cn(
         "grid grid-cols-12 w-full p-7 items-center",
-        !isLast && "border-b-[1px] border-gray-200"
+        !isLast && "border-b-[1px] border-gray-200 dark:border-gray-800"
       )}
     >
       <div
@@ -64,7 +65,7 @@ export function GenericInboxItem<
           deploymentUrl ? "col-span-7" : "col-span-9"
         )}
       >
-        <p className="text-black text-sm font-semibold">Thread ID:</p>
+        <p className="text-black dark:text-gray-200 text-sm font-semibold">Thread ID</p>
         <ThreadIdCopyable showUUID threadId={threadData.thread.thread_id} />
       </div>
 
@@ -81,7 +82,7 @@ export function GenericInboxItem<
             <Button
               size="sm"
               variant="outline"
-              className="flex items-center gap-1 bg-white"
+              className="flex items-center gap-1 bg-white dark:bg-gray-800"
               onClick={handleOpenInStudio}
             >
               Studio
@@ -89,12 +90,13 @@ export function GenericInboxItem<
           </NextLink>
         </div>
       )}
+      <DeleteButton threadId={threadData.thread.thread_id} />
 
       <div className="col-span-2">
         <InboxItemStatuses status={threadData.status} />
       </div>
 
-      <p className="col-span-1 text-gray-600 font-light text-sm">
+      <p className="col-span-1 text-gray-600 dark:text-gray-400 font-light text-sm">
         {updatedAtDateString}
       </p>
     </div>

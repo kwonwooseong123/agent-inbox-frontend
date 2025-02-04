@@ -50,9 +50,9 @@ export function ThreadIdCopyable({
       onClick={(e) => handleCopy(e)}
       variant="ghost"
       tooltip="Copy thread ID"
-      className="flex flex-grow-0 gap-1 items-center p-1 rounded-md border-[1px] cursor-pointer hover:bg-gray-50/90 border-gray-200 w-fit"
+      className="flex flex-grow-0 gap-1 items-center p-1 rounded-md cursor-pointer hover:bg-gray-50/90 dark:hover:bg-gray-800/90 border-gray-500 w-fit"
     >
-      <p className="font-mono text-xs">{showUUID ? threadId : "ID"}</p>
+      <p className="font-mono text-xs">{showUUID ? null : "ID"}</p>
       <AnimatePresence mode="wait" initial={false}>
         {copied ? (
           <motion.div
